@@ -13,7 +13,7 @@ function login() {
   console.log(info)
 
 
-  fetch("http://localhost:8080/users/login", {
+  fetch("https://issuetracker-web.herokuapp.com/login", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -104,7 +104,7 @@ function registerUser() {
   }
   console.log(info2)
 
-  fetch("http://localhost:8080/users/create", {
+  fetch("https://issuetracker-web.herokuapp.com/create", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -118,6 +118,10 @@ function registerUser() {
 
       if(parseInt(response.status) === 500){
         feeback.innerHTML="Fill in all fields"
+        feeback.className="error-text"
+      }
+      if (response[0] === "Password be at least 4 characters long.") {
+        feeback.innerHTML=`${response[0]}`
         feeback.className="error-text"
       }
       if (response[0] === "Password must consist of numbers 1 - 9 only.") {
@@ -312,7 +316,7 @@ function cancelEquipPost() {
 function getUsers(){
   var userSelect = document.getElementById("supervisorSelect")
 
-  fetch("http://localhost:8080/users/read")
+  fetch("https://issuetracker-web.herokuapp.com/read")
     .then(response => response.json())
     .then(data => {
 var supervisors=data.filter(e => e.roleId === "1")
@@ -388,7 +392,7 @@ function getIssues() {
         equipmentSelect.options[equipmentSelect.options.length] = new Option(`${item.name}`, `${item.id}`);
       })
 
-  fetch("http://localhost:8080/users/read")
+  fetch("https://issuetracker-web.herokuapp.com/read")
   .then(response => response.json())
   .then(data => {
     users = data;
