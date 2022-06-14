@@ -6,14 +6,15 @@ function login() {
   
   var feeback = document.getElementById('login-feedback')
   var email = document.getElementById('userEmail').value
-  var password = userPassword.toString().substring(0, 4);
+  var password = userPassword.toString();
 
   var info = { password, email
   }
+ 
   console.log(info)
 
 
-  fetch("https://issuetracker-web.herokuapp.com/login", {
+  fetch("https://issuetracker-web.herokuapp.com/users/login", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -25,7 +26,7 @@ function login() {
   }).then(response => response.json())
     .then((data) => {
       
-  console.log(data)
+      console.log(data)
       if (data[0].id !== -1) {
 
         localStorage.setItem("user", JSON.stringify(data[0]));
@@ -71,7 +72,7 @@ function registerUser() {
   var selects = document.getElementById('roleSelect')
   var email = document.getElementById('userEmail').value
   var roleId = selects.value
-  var stringPassword = userPassword.toString().substring(0, 4).split("");
+  var stringPassword = userPassword.toString().split("");
 
     for (var i = 0; i < stringPassword.length; i++) {
     if (i < stringPassword.length - 1) {
@@ -81,16 +82,6 @@ function registerUser() {
     else {
 
       parsedPassword.push(stringPassword[i])
-    }
-  }
-  for (var j = 0; j < stringPassword.length; j++) {
-    if (j < stringPassword.length - 1) {
-
-      parsedPassword.push(stringPassword[j] + "@")
-    }
-    else {
-
-      parsedPassword.push(stringPassword[j])
     }
   }
   parsedPassword.forEach(item => {
@@ -104,7 +95,7 @@ function registerUser() {
   }
   console.log(info2)
 
-  fetch("https://issuetracker-web.herokuapp.com/create", {
+  fetch("https://issuetracker-web.herokuapp.com/users/create", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -316,7 +307,7 @@ function cancelEquipPost() {
 function getUsers(){
   var userSelect = document.getElementById("supervisorSelect")
 
-  fetch("https://issuetracker-web.herokuapp.com/read")
+  fetch("https://issuetracker-web.herokuapp.com/users/read")
     .then(response => response.json())
     .then(data => {
 var supervisors=data.filter(e => e.roleId === "1")
@@ -392,7 +383,7 @@ function getIssues() {
         equipmentSelect.options[equipmentSelect.options.length] = new Option(`${item.name}`, `${item.id}`);
       })
 
-  fetch("https://issuetracker-web.herokuapp.com/read")
+  fetch("https://issuetracker-web.herokuapp.com/users/read")
   .then(response => response.json())
   .then(data => {
     users = data;

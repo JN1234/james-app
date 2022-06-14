@@ -13,7 +13,7 @@ function login() {
   console.log(info)
 
 
-  fetch("https://issuetracker-web.herokuapp.com/login", {
+  fetch("http://localhost:8080/login", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -104,7 +104,7 @@ function registerUser() {
   }
   console.log(info2)
 
-  fetch("https://issuetracker-web.herokuapp.com/create", {
+  fetch("http://localhost:8080/create", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -316,7 +316,7 @@ function cancelEquipPost() {
 function getUsers(){
   var userSelect = document.getElementById("supervisorSelect")
 
-  fetch("https://issuetracker-web.herokuapp.com/read")
+  fetch("http://localhost:8080/read")
     .then(response => response.json())
     .then(data => {
 var supervisors=data.filter(e => e.roleId === "1")
@@ -392,7 +392,7 @@ function getIssues() {
         equipmentSelect.options[equipmentSelect.options.length] = new Option(`${item.name}`, `${item.id}`);
       })
 
-  fetch("https://issuetracker-web.herokuapp.com/read")
+  fetch("http://localhost:8080/read")
   .then(response => response.json())
   .then(data => {
     users = data;
