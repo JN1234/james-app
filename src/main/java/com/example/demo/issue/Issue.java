@@ -28,6 +28,16 @@ public class Issue {
         public Issue() {
         }
 
+        public Issue(int id, LocalDate date, String description, String location, String status, String userId, String supervisorId, String equipmentId) {
+                this.id = id;
+                this.date = date;
+                this.description = description;
+                this.location = location;
+                this.status = status;
+                this.userId = userId;
+                this.supervisorId = supervisorId;
+                this.equipmentId = equipmentId;
+        }
 
         public int getId() {
                 return id;

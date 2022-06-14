@@ -6,14 +6,15 @@ function login() {
   
   var feeback = document.getElementById('login-feedback')
   var email = document.getElementById('userEmail').value
-  var password = userPassword.toString().substring(0, 4);
+  var password = userPassword.toString();
 
   var info = { password, email
   }
+ 
   console.log(info)
 
 
-  fetch("http://localhost:8080/login", {
+  fetch("http://localhost:8080/users/login", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -25,7 +26,7 @@ function login() {
   }).then(response => response.json())
     .then((data) => {
       
-  console.log(data)
+      console.log(data)
       if (data[0].id !== -1) {
 
         localStorage.setItem("user", JSON.stringify(data[0]));
@@ -71,7 +72,7 @@ function registerUser() {
   var selects = document.getElementById('roleSelect')
   var email = document.getElementById('userEmail').value
   var roleId = selects.value
-  var stringPassword = userPassword.toString().substring(0, 4).split("");
+  var stringPassword = userPassword.toString().split("");
 
     for (var i = 0; i < stringPassword.length; i++) {
     if (i < stringPassword.length - 1) {
@@ -81,16 +82,6 @@ function registerUser() {
     else {
 
       parsedPassword.push(stringPassword[i])
-    }
-  }
-  for (var j = 0; j < stringPassword.length; j++) {
-    if (j < stringPassword.length - 1) {
-
-      parsedPassword.push(stringPassword[j] + "@")
-    }
-    else {
-
-      parsedPassword.push(stringPassword[j])
     }
   }
   parsedPassword.forEach(item => {
@@ -104,7 +95,7 @@ function registerUser() {
   }
   console.log(info2)
 
-  fetch("http://localhost:8080/create", {
+  fetch("http://localhost:8080/users/create", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -179,6 +170,10 @@ function goToPage(id){
   }
 }
 
+function goHome(){
+    
+  window.location=`index.html`;
+}
 function addEquip() {
 
   var description = document.getElementById('equipmentDesc').value;
@@ -245,11 +240,8 @@ function addIssue() {
   var equipmentName = equipselects.options[equipselects.selectedIndex].text;
 
   var supervisorId = parseInt(supervisorselects.value);
-  var supervisorName = supervisorselects.options[supervisorselects.selectedIndex].text;
-
-  var dateObject = new Date().getFullYear().toString();
-  var month = new Date().getMonth().toString();
-  var day = new Date().getDate().toString();
+  var supervisorName = supervisorselects.opti
+  var today  = new Date().toISOString().slice(0, 10);
 
   fetch("http://localhost:8080/issues/read")
     .then(response => response.json())
@@ -260,7 +252,7 @@ function addIssue() {
       }
 
       var info = {
-        description, location, equipmentId,supervisorId, userId: role, status: "", id: issuesId, date: dateObject + "-" + "0" + month + '-' + "0" + day
+        description, location, equipmentId,supervisorId, userId: role, status: "", id: issuesId,date:today
       }
 
       console.log(info)
@@ -316,7 +308,7 @@ function cancelEquipPost() {
 function getUsers(){
   var userSelect = document.getElementById("supervisorSelect")
 
-  fetch("http://localhost:8080/read")
+  fetch("http://localhost:8080/users/read")
     .then(response => response.json())
     .then(data => {
 var supervisors=data.filter(e => e.roleId === "1")
@@ -392,7 +384,7 @@ function getIssues() {
         equipmentSelect.options[equipmentSelect.options.length] = new Option(`${item.name}`, `${item.id}`);
       })
 
-  fetch("http://localhost:8080/read")
+  fetch("http://localhost:8080/users/read")
   .then(response => response.json())
   .then(data => {
     users = data;

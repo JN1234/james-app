@@ -15,6 +15,12 @@ public class Equipment {
     public Equipment() {
     }
 
+    public Equipment(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }

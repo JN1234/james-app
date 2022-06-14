@@ -14,7 +14,7 @@ function login() {
   console.log(info)
 
 
-  fetch("https://issuetracker-web.herokuapp.com/users/login", {
+  fetch("http://issuetracker-web.herokuapp.com/users/login", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -95,7 +95,7 @@ function registerUser() {
   }
   console.log(info2)
 
-  fetch("https://issuetracker-web.herokuapp.com/users/create", {
+  fetch("http://issuetracker-web.herokuapp.com/users/create", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -170,6 +170,10 @@ function goToPage(id){
   }
 }
 
+function goHome(){
+    
+  window.location=`index.html`;
+}
 function addEquip() {
 
   var description = document.getElementById('equipmentDesc').value;
@@ -177,7 +181,7 @@ function addEquip() {
   var name = document.getElementById('equipmentName').value;
 
 
-  fetch("https://issuetracker-web.herokuapp.com/equips/read")
+  fetch("http://issuetracker-web.herokuapp.com/equips/read")
     .then(response => response.json())
     .then(equips => {
 
@@ -194,7 +198,7 @@ function addEquip() {
 
       console.log(info)
 
-      fetch("https://issuetracker-web.herokuapp.com/equips/create", {
+      fetch("http://issuetracker-web.herokuapp.com/equips/create", {
         method: "post",
         headers: {
           'Accept': 'application/json',
@@ -236,13 +240,10 @@ function addIssue() {
   var equipmentName = equipselects.options[equipselects.selectedIndex].text;
 
   var supervisorId = parseInt(supervisorselects.value);
-  var supervisorName = supervisorselects.options[supervisorselects.selectedIndex].text;
+  var supervisorName = supervisorselects.opti
+  var today  = new Date().toISOString().slice(0, 10);
 
-  var dateObject = new Date().getFullYear().toString();
-  var month = new Date().getMonth().toString();
-  var day = new Date().getDate().toString();
-
-  fetch("https://issuetracker-web.herokuapp.com/issues/read")
+  fetch("http://issuetracker-web.herokuapp.com/issues/read")
     .then(response => response.json())
     .then(issues => {
       var issuesId = 0;
@@ -251,11 +252,11 @@ function addIssue() {
       }
 
       var info = {
-        description, location, equipmentId,supervisorId, userId: role, status: "", id: issuesId, date: dateObject + "-" + "0" + month + '-' + "0" + day
+        description, location, equipmentId,supervisorId, userId: role, status: "", id: issuesId,date:today
       }
 
       console.log(info)
-      fetch("https://issuetracker-web.herokuapp.com/issues/create", {
+      fetch("http://issuetracker-web.herokuapp.com/issues/create", {
         method: "post",
         headers: {
           'Accept': 'application/json',
@@ -307,7 +308,7 @@ function cancelEquipPost() {
 function getUsers(){
   var userSelect = document.getElementById("supervisorSelect")
 
-  fetch("https://issuetracker-web.herokuapp.com/users/read")
+  fetch("http://issuetracker-web.herokuapp.com/users/read")
     .then(response => response.json())
     .then(data => {
 var supervisors=data.filter(e => e.roleId === "1")
@@ -321,7 +322,7 @@ var supervisors=data.filter(e => e.roleId === "1")
 function getRoles(){
   var userSelect = document.getElementById("roleSelect")
 
-  fetch("https://issuetracker-web.herokuapp.com/role/read")
+  fetch("http://issuetracker-web.herokuapp.com/role/read")
     .then(response => response.json())
     .then(data => {
   data.map(item => {
@@ -350,7 +351,7 @@ function getEquips() {
     username.innerHTML=` <i data-feather="user" style="color:black;"></i>  Welcome, ${user.name}`
   }
   
-  fetch("https://issuetracker-web.herokuapp.com/equips/read")
+  fetch("http://issuetracker-web.herokuapp.com/equips/read")
     .then(response => response.json())
     .then(data => {
 
@@ -373,7 +374,7 @@ function getIssues() {
   var users = []
   
   var equipmentSelect = document.getElementById('equipmentSelect');
-  fetch("https://issuetracker-web.herokuapp.com/equips/read")
+  fetch("http://issuetracker-web.herokuapp.com/equips/read")
     .then(response => response.json())
     .then(data => {
       equipment = data;
@@ -383,12 +384,12 @@ function getIssues() {
         equipmentSelect.options[equipmentSelect.options.length] = new Option(`${item.name}`, `${item.id}`);
       })
 
-  fetch("https://issuetracker-web.herokuapp.com/users/read")
+  fetch("http://issuetracker-web.herokuapp.com/users/read")
   .then(response => response.json())
   .then(data => {
     users = data;
   
-    fetch("https://issuetracker-web.herokuapp.com/issues/read")
+    fetch("http://issuetracker-web.herokuapp.com/issues/read")
     .then(response => response.json())
     .then(issues => {
 
@@ -470,7 +471,7 @@ function deleteIssue(e) {
 
   console.log(info)
 
-  fetch("https://issuetracker-web.herokuapp.com/issues/delete", {
+  fetch("http://issuetracker-web.herokuapp.com/issues/delete", {
     method: "delete",
     headers: {
       'Accept': 'application/json',
@@ -496,7 +497,7 @@ function deleteEquip(e) {
 
   console.log(info)
 
-  fetch("https://issuetracker-web.herokuapp.com/equips/delete", {
+  fetch("http://issuetracker-web.herokuapp.com/equips/delete", {
     method: "delete",
     headers: {
       'Accept': 'application/json',
@@ -529,7 +530,7 @@ function updateIssue() {
     window.alert("Only Supervisor can provide feedback.Please log in as superviser")
   }
   else {
-    fetch("https://issuetracker-web.herokuapp.com/issues/update", {
+    fetch("http://issuetracker-web.herokuapp.com/issues/update", {
       method: "put",
       headers: {
         'Accept': 'application/json',
