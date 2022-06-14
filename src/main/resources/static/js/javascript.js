@@ -461,12 +461,10 @@ function logStuff() {
 function deleteIssue(e) {
 
 
-  var dateObject = new Date().getFullYear().toString();
-  var month = new Date().getMonth().toString();
-  var day = new Date().getDate().toString();
+  var today  = new Date().toISOString().slice(0, 10);
   var id = parseInt(e);
   var info = {
-    description: "des", location: "ello", equipmentId: "12", userId: 1, status: "status", id, date: dateObject + "-" + "0" + month + '-' + "0" + day
+    description: "des", location: "ello", equipmentId: "12", userId: 1, status: "status", id, date:today
   }
 
   console.log(info)

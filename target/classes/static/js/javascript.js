@@ -14,7 +14,7 @@ function login() {
   console.log(info)
 
 
-  fetch("http://localhost:8080/users/login", {
+  fetch("http://issuetracker-web.herokuapp.com/users/login", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -95,7 +95,7 @@ function registerUser() {
   }
   console.log(info2)
 
-  fetch("http://localhost:8080/users/create", {
+  fetch("http://issuetracker-web.herokuapp.com/users/create", {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -181,7 +181,7 @@ function addEquip() {
   var name = document.getElementById('equipmentName').value;
 
 
-  fetch("http://localhost:8080/equips/read")
+  fetch("http://issuetracker-web.herokuapp.com/equips/read")
     .then(response => response.json())
     .then(equips => {
 
@@ -198,7 +198,7 @@ function addEquip() {
 
       console.log(info)
 
-      fetch("http://localhost:8080/equips/create", {
+      fetch("http://issuetracker-web.herokuapp.com/equips/create", {
         method: "post",
         headers: {
           'Accept': 'application/json',
@@ -243,7 +243,7 @@ function addIssue() {
   var supervisorName = supervisorselects.opti
   var today  = new Date().toISOString().slice(0, 10);
 
-  fetch("http://localhost:8080/issues/read")
+  fetch("http://issuetracker-web.herokuapp.com/issues/read")
     .then(response => response.json())
     .then(issues => {
       var issuesId = 0;
@@ -256,7 +256,7 @@ function addIssue() {
       }
 
       console.log(info)
-      fetch("http://localhost:8080/issues/create", {
+      fetch("http://issuetracker-web.herokuapp.com/issues/create", {
         method: "post",
         headers: {
           'Accept': 'application/json',
@@ -308,7 +308,7 @@ function cancelEquipPost() {
 function getUsers(){
   var userSelect = document.getElementById("supervisorSelect")
 
-  fetch("http://localhost:8080/users/read")
+  fetch("http://issuetracker-web.herokuapp.com/users/read")
     .then(response => response.json())
     .then(data => {
 var supervisors=data.filter(e => e.roleId === "1")
@@ -322,7 +322,7 @@ var supervisors=data.filter(e => e.roleId === "1")
 function getRoles(){
   var userSelect = document.getElementById("roleSelect")
 
-  fetch("http://localhost:8080/role/read")
+  fetch("http://issuetracker-web.herokuapp.com/role/read")
     .then(response => response.json())
     .then(data => {
   data.map(item => {
@@ -351,7 +351,7 @@ function getEquips() {
     username.innerHTML=` <i data-feather="user" style="color:black;"></i>  Welcome, ${user.name}`
   }
   
-  fetch("http://localhost:8080/equips/read")
+  fetch("http://issuetracker-web.herokuapp.com/equips/read")
     .then(response => response.json())
     .then(data => {
 
@@ -374,7 +374,7 @@ function getIssues() {
   var users = []
   
   var equipmentSelect = document.getElementById('equipmentSelect');
-  fetch("http://localhost:8080/equips/read")
+  fetch("http://issuetracker-web.herokuapp.com/equips/read")
     .then(response => response.json())
     .then(data => {
       equipment = data;
@@ -384,12 +384,12 @@ function getIssues() {
         equipmentSelect.options[equipmentSelect.options.length] = new Option(`${item.name}`, `${item.id}`);
       })
 
-  fetch("http://localhost:8080/users/read")
+  fetch("http://issuetracker-web.herokuapp.com/users/read")
   .then(response => response.json())
   .then(data => {
     users = data;
   
-    fetch("http://localhost:8080/issues/read")
+    fetch("http://issuetracker-web.herokuapp.com/issues/read")
     .then(response => response.json())
     .then(issues => {
 
@@ -471,7 +471,7 @@ function deleteIssue(e) {
 
   console.log(info)
 
-  fetch("http://localhost:8080/issues/delete", {
+  fetch("http://issuetracker-web.herokuapp.com/issues/delete", {
     method: "delete",
     headers: {
       'Accept': 'application/json',
@@ -497,7 +497,7 @@ function deleteEquip(e) {
 
   console.log(info)
 
-  fetch("http://localhost:8080/equips/delete", {
+  fetch("http://issuetracker-web.herokuapp.com/equips/delete", {
     method: "delete",
     headers: {
       'Accept': 'application/json',
@@ -530,7 +530,7 @@ function updateIssue() {
     window.alert("Only Supervisor can provide feedback.Please log in as superviser")
   }
   else {
-    fetch("http://localhost:8080/issues/update", {
+    fetch("http://issuetracker-web.herokuapp.com/issues/update", {
       method: "put",
       headers: {
         'Accept': 'application/json',
